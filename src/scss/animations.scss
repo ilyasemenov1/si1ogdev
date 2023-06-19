@@ -1,0 +1,111 @@
+@keyframes add-popup {
+    0% {
+        opacity: 0;
+        transform: scale(.8);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+@keyframes remove-popup {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(.8);
+    }
+}
+@keyframes add-block {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+@keyframes remove-block {
+    0% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}
+@keyframes remove-button {
+    0% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+}
+@keyframes add-block-animation {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+@keyframes add-article-animation {
+    0% {
+        opacity: 0;
+        transform: translateY(100px) scale(.3);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0px) scale(1);
+    }
+}
+@keyframes remove-article-animation {
+    0% {
+        opacity: 1;
+        transform: translateY(0px) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(100px) scale(.3);
+    }
+}
+@keyframes ripple {
+    to {
+        transform: scale(4);
+        filter: blur(15px);
+    }
+}
+@keyframes ripple100 {
+    from {
+        filter: blur(10px);   
+    }
+    to {
+        transform: scale(4);
+        filter: blur(100px);
+    }
+}
+@keyframes ripple200 {
+    from {
+        filter: blur(10px);   
+    }
+    to {
+        transform: scale(4);
+        filter: blur(200px);
+    }
+}
+@keyframes ripple400 {
+    from {
+        filter: blur(10px);   
+    }
+    to {
+        transform: scale(4);
+        filter: blur(400px);
+    }
+}

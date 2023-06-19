@@ -1,0 +1,159 @@
+@media (max-width: 1566px) {
+    .fixed-buttons {
+        left: 15px;
+        width: calc(100% - 30px);
+    } 
+}
+@media (max-width: 1200px) {
+    .about_block {
+        grid-template-columns: 1fr;
+    }
+}
+@media (max-width: 1125px) {
+    .burger-menu_links {
+        li.mobile-visible {
+            display: block;
+        }
+    }
+    .header-content_main-menu {
+        display: none;
+    }
+    .footer-content_conteiner {
+        gap: 25px;
+    }
+    .footer-content_links-block {
+        div {
+            column-gap: 12px;
+        }
+    }
+}
+@media (max-width: 950px) {
+    .footer-content_links-block {
+        div {
+            grid-template-columns: 1fr;
+        }
+    }
+    .description-content {
+        grid-template-columns: 1fr;
+    }
+    .map-yandex {
+        min-height: 250px;
+    }
+}
+@media (max-width: 850px) {
+    .footer-content_conteiner {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+}
+@media (max-width: 768px) {
+    .fixed-buttons {
+        top: calc(100% + 10px);
+    }
+    .about_block {
+        grid-template-columns: 1fr;
+    }
+    .swiper-wrapper div {
+        aspect-ratio: 16 / 9;
+    }
+}
+@media (max-width: 600px) {
+    .header {
+        .header-content_logo {
+            width: 30px;
+            height: 40px;
+        }
+        .header-content_organization-info a {
+            font-size: 21px;
+            font-weight: 700;
+        }
+        .header-content_page-status {
+            display: none;
+            opacity: 0;
+        }
+        .header-content_organization {
+            gap: 15px;
+            min-width: 300px;
+        }
+        .header-content_organization-info {
+            gap: 0px;
+        } 
+    }
+    .menu-conteiner {
+        transform: translateY(70px) !important;
+        height: calc(100vh - 70px) !important;
+        height: calc(100dvh - 70px) !important;
+    }
+    .footer-second-content {
+        p, a {
+            font-size: 15px;
+        }
+    }
+    main {
+        padding: 70px 0 0 0;
+    }
+    .swiper-cont {
+        &>div {
+            &:hover {
+                .mainSwiper_arrow {
+                    opacity: 0;
+                    visibility: hidden;
+                }
+            }
+        }
+    }
+    .map-yandex {
+        min-height: 200px;
+    }
+    .cookies_content {
+        flex-direction: column;
+        gap: 10px;
+        padding: 15px;
+    }
+}
+@media (max-width: 490px) {
+    .header-content_organization-info a {
+        position: relative;
+        transition: none;
+        font-size: 0px !important;
+        &::after {
+            position: absolute;
+            top: -13px;
+            content: "Лицей №1";
+            width: 100px;
+            font-size: 21px;
+        }
+    } 
+    .header-content_organization {
+        min-width: auto !important;
+    }
+    .menu-conteiner::after {
+        left: 0;
+        width: 100%;
+    }
+    .burger-menu {
+        width: 100%;
+    }
+    .footer-second-content {
+        flex-direction: column-reverse;
+        gap: 10px;
+    }
+    .fixed-buttons {
+        top: calc(100% + 15px);
+    }
+}
+@media (max-width: 355px) {
+    .header-content_buttons {
+        gap: 7px;
+        button {
+            width: 38px;
+            height: 38px;
+            &.burger {
+                span {
+                    left: 16px;
+                    width: calc(100% - 24px);
+                }
+            }
+        }
+    }
+}
