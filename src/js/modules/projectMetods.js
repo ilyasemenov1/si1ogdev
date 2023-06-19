@@ -4,115 +4,10 @@ import Swiper, { Navigation, Pagination, Autoplay } from 'swiper';
 import '../../../node_modules/swiper/swiper-bundle.min.css';
     
 Swiper.use([Navigation, Pagination, Autoplay]);
-class ButtonPopup {
-    constructor(element) {
-        this.element = element;
-        this.isAdd = true;
-    }
-
-    detectMob() {
-        const toMatch = [
-            /Android/i,
-            /webOS/i,
-            /iPhone/i,
-            /iPad/i,
-            /iPod/i,
-            /BlackBerry/i,
-            /Windows Phone/i
-        ];
-        
-        return toMatch.some((toMatchItem) => {
-            return navigator.userAgent.match(toMatchItem);
-        });
-    }
-
-    event() {
-        let isMobile = this.detectMob();
-        if (isMobile) {return}
-
-        if (this.element.dataset.popupRight !== undefined) {
-            let popup = new GeneratePopup(this.element);
-            popup.popupRight();
-        } else if (this.element.dataset.popupLeft !== undefined) {
-            let popup = new GeneratePopup(this.element);
-            popup.popupLeft();
-        } else if (this.element.dataset.popup !== undefined) {
-            let popup = new GeneratePopup(this.element);
-            popup.popupClassic();
-        }
-    }
-
-    removePopup() {
-        let popups = document.querySelectorAll(".button-popup");
-        this.isAdd = false;
-        popups.forEach(e => {
-            e.classList.add("remove");
-            setTimeout(() => {
-                e.remove();
-            }, 100);
-        });
-        setTimeout(() => {
-            this.isAdd = true;
-        }, 200);
-    }
-}
-
-class GeneratePopup {
-    constructor(element) {
-        this.element = element;
-        this.rect = element.getBoundingClientRect();
-
-        this.popup = document.createElement("div");
-        this.popup.className = "button-popup";
-
-        document.body.append(this.popup);
-
-        this.elementMargin = 7;
-        this.popupMargin = 10;
-    }
-
-    popupClassic() {
-        this.popup.innerHTML = `<span>${this.element.dataset.popup}</span>`;
-        let left = this.rect.left + this.element.clientWidth / 2 - this.popup.clientWidth / 2;
-        let top = this.rect.top + this.rect.height + this.elementMargin;
-
-        this.popup.style = `left: ${left}px; top: ${top}px`;
-
-        window.addEventListener("scroll", () => {
-            setTimeout(() => {
-                let elementY = this.element.offsetTop;
-                top = elementY + this.rect.height + this.elementMargin;
-                this.popup.style = `left: ${left}px; top: ${top}px`;
-            }, 100);
-        });
-    }
-
-    popupRight() {
-        this.popup.innerHTML = `<span>${this.element.dataset.popupRight}</span>`;
-        this.popup.classList.add("right");
-        let left = this.rect.left + this.element.clientWidth + this.popupMargin;
-        let top = this.rect.top  + this.element.clientHeight / 2 - this.popup.clientHeight / 2;
-
-        this.popup.style = `left: ${left}px; top: ${top}px`;
-    }
-
-    popupLeft() {
-        this.popup.innerHTML = `<span>${this.element.dataset.popupLeft}</span>`;
-        this.popup.classList.add("left");
-        let left = this.rect.left - this.popupMargin - this.popup.clientWidth;
-        let top = this.rect.top  + this.element.clientHeight / 2 - this.popup.clientHeight / 2;
-
-        this.popup.style = `left: ${left}px; top: ${top}px`;
-    }
-}
 
 class PageScroll {
     constructor() {
         this.header = document.querySelector(".header");
-        this.burgerMenuE = new BurgerMenuEvents();
-        this.burgerMenu = document.querySelector(".burger-menu");
-        this.topButton = document.querySelector(".scroll-top");
-        this.articleContent = document.querySelector(".article-content");
         this.delta = 500;
         this.lastKeypressTime = 0;
     }
@@ -123,9 +18,6 @@ class PageScroll {
         });
         window.addEventListener("load", () => {
             this.scroll();
-        });
-        this.topButton.addEventListener("click", () => {
-            window.scrollTo({top: 0, behavior: 'smooth'}); 
         });
         window.addEventListener("keydown", (event) => {
             this.doubleArrowKeypress(event);
@@ -157,20 +49,14 @@ class PageScroll {
     }
 
     scroll() {
-        let scroll = window.pageYOffset;
+        let pageScroll = window.pageYOffset;
+        const SCROLL_POINT = 200;
 
-        if (scroll > 35) {
-            this.burgerMenuE.calcBurgerMenuPosition(70);
+        console.log(pageScroll);
+        if (pageScroll > SCROLL_POINT) {
             this._constractHeader();
-            this.burgerMenu.classList.add("scrolled");
-            this.topButton.classList.remove("removed");
-            if (this.articleContent) {this.articleContent.classList.add("scrolled")}
-        } else {
-            this.burgerMenuE.calcBurgerMenuPosition(115);
-            this.header.classList.remove("scrolled");
-            this.burgerMenu.classList.remove("scrolled");
-            this.topButton.classList.add("removed");
-            if (this.articleContent) {this.articleContent.classList.remove("scrolled")}
+        } else if (pageScroll <= SCROLL_POINT) {
+            this._removeScrollHeader();
         }
     }
 
@@ -183,56 +69,6 @@ class PageScroll {
     }
 }
 
-class BurgerMenuEvents {
-    constructor() {
-        this.burgerMenuCont = document.querySelector(".menu-conteiner");
-        this.pageHeader = document.querySelector(".header");
-        this.pageFixedButtons = document.querySelectorAll(".scroll-top, .visually-impaired-version");
-        this.selectInut = document.querySelectorAll(".bruger-menu_select-conteiner>input");
-    }
-
-    calcBurgerMenuPosition(num) {
-        let headerHeight = this.pageHeader.clientHeight;
-        if (!isNaN(num)) {
-            headerHeight = num;
-        }
-        this.burgerMenuCont.style = `transform: translateY(${headerHeight}px); height: calc(100dvh - ${headerHeight}px)`;
-    }
-
-    openBurgerMenu() {
-        this.burgerMenuCont.classList.remove("disactive");
-        setTimeout(() => {
-            this.burgerMenuCont.classList.add("active");
-            document.body.style = `overflow:hidden;`;
-        }, 10);
-        this.pageFixedButtons.forEach(element => {
-            element.classList.add("removed");
-        });
-
-        let articleNavigation = new ArticleNavigation();
-        articleNavigation.closeNav();
-    }
-
-    closeBurgerMenu() {
-        this.burgerMenuCont.classList.remove("active");
-        this.burgerMenuCont.classList.add("remove");
-        this.#removeSelectOnCloseBurger();
-        setTimeout(() => {
-            this.burgerMenuCont.classList.add("disactive");
-            this.burgerMenuCont.classList.remove("remove");
-            document.body.style = ``;
-            this.pageFixedButtons.forEach(element => {
-                element.classList.remove("removed");
-                let scroll = new PageScroll();
-                scroll.scroll();
-            });
-        }, 200);
-    }
-
-    #removeSelectOnCloseBurger() {
-        this.selectInut.forEach(element => element.checked = false);
-    }
-}
 
 class TextCopy {
     constructor(element) {
@@ -326,70 +162,6 @@ class TextCopy {
                 sessionStorage.setItem("isAddNotify", JSON.stringify(true));
             }, 200)
         }, 1000);
-    }
-}
-
-
-class NewsArticleFullscreen {
-    constructor() {
-        this.news = document.querySelector(".news");
-        this.blur = document.querySelector(".page-blur");
-        this.target = "";
-        this.article = "";
-    }
-
-    fullscreenEvent() {
-        if (!this.news || !this.blur) {
-            return;
-        }
-        
-        this.news.addEventListener("click", (event) => {
-            this._event(event);
-        });
-        this.blur.addEventListener("click", () => {
-            this.removeFullscreenArticles();
-        });
-    }
-
-    _event(event) {
-        this.target = event.target;
-
-        if (this.target.classList.contains("news-article_fullscreen")) {
-            this.target.classList.add("article-remove-button");
-            this.target.textContent = "Свернуть";
-
-            document.body.style = "overflow: hidden;";
-            let thisArticle = this.target.parentElement.parentElement;
-
-            this.article = document.createElement("article");
-            this.article.className = "news-article fullscreen"
-            this.article.innerHTML = thisArticle.innerHTML;
-            document.body.append(this.article);
-
-            this.blur.classList.add("active");
-            this.target.blur();
-            this.target.classList.remove("article-remove-button");
-            this.target.textContent = "Во весь экран";
-
-            let articleRemove = document.querySelector(".article-remove-button");
-            articleRemove.addEventListener("click", () => {
-                this.removeFullscreenArticles();
-            });
-        }
-    }
-
-    removeFullscreenArticles() {
-        let articleBlocks = document.querySelectorAll(".news-article");
-        articleBlocks.forEach(element => {
-            if (element.classList.contains("fullscreen")) {
-                element.classList.add("remove");
-                this.blur.classList.remove("active");
-                setTimeout(() => {
-                    document.body.style = ""
-                    element.remove();
-                }, 300);
-            }
-        });
     }
 }
 
@@ -610,76 +382,6 @@ class SetPageTheme {
     }
 }
 
-class InitFullscreenSwiper {
-    constructor(swiper) {
-        this.imgContainers = document.querySelectorAll(".page-article_img-grid");
-        this.target, this.container;
-        this.swiperWrapper = document.querySelector(".fullscreen-swiper_wrapper");
-        this.swiperContainer = document.querySelector(".fullscreen-swiper");
-        this.swiperRemoveButton = document.querySelector(".fullscreen-swiper-navigation_close-button");
-        this.counter = document.querySelector(".fullscreen-swiper-navigation_slides-counter");
-        this.slideIndex = swiper.activeIndex;
-        this.swiper = swiper;
-    }
-
-    initSwiper() {
-        this.slideGenerateEvent();
-        this.swiperRemoveEvent();
-    }
-
-    sildeNumEvent() {
-        let slides = document.querySelectorAll(".fullscreen-swiper_wrapper>div");
-        this.counter.innerText = `${this.slideIndex+1}/${slides.length}`;
-    }
-
-    swiperRemoveEvent() {
-        this.swiperRemoveButton.addEventListener("click", () => {
-            this.removeSwiper();
-        });
-    }
-
-    removeSwiper() {
-        this.swiperContainer.classList.remove("active");
-        document.body.style = "overflow: visivle;";
-        setTimeout(() => {
-            this.swiperWrapper.innerHTML = "";
-        }, 200);
-    }
-
-    slideGenerateEvent() {
-        this.imgContainers.forEach(element => {
-            element.addEventListener("click", (event) => {
-                this.swiperContainer.classList.add("active");
-                document.body.style = "overflow: hidden;";
-                this.target = event.target;
-                this.container = element;
-                let conteinerChildren = this.container.children;
-                for (let i = 0; i < conteinerChildren.length; i++) {
-                    let img  = conteinerChildren.item(i).innerHTML;
-                    let slide = `
-                    <div class="swiper-slide fullscreen-swiper_slide">
-                        <div class="swiper-zoom-container">${img}</div>
-                    </div>`;
-                    this.swiperWrapper.innerHTML += slide;
-                }
-                this.sildeNumEvent();
-                this.findTargetImgIdex();
-            });
-        });
-    }
-    
-    findTargetImgIdex() {
-        if (this.target.src) {
-            let buttons = document.querySelectorAll(".page-article_img-button");
-            for (let i = 0; i < buttons.length; i++) {
-                if (buttons[i].children[0].children[1].src == this.target.src) {
-                    this.swiper.slideTo(i);
-                }
-            }
-        }
-    }
-}
-
 export class ButtonRippleEffect {
     constructor() {
         this.buttons = document.querySelectorAll("button, .burger-menu_link, .news-history_link, .rasp a, .footer-content-social_link, .liceum1-info-link, .ege_link, .oge_link");
@@ -770,4 +472,4 @@ export class imgLasyLoading {
     }
 }
 
-export { ButtonPopup, PageScroll, BurgerMenuEvents, TextCopy, NewsArticleFullscreen, ArticleNavigation, SetPageTheme, InitFullscreenSwiper }
+export { PageScroll, TextCopy, ArticleNavigation, SetPageTheme }

@@ -1,5 +1,4 @@
-import { PageScroll, NewsArticleFullscreen, ArticleNavigation, SetPageTheme, ButtonRippleEffect, imgLasyLoading } from "./modules/projectMetods.js";
-import { DocumentEvents } from "./modules/documentEvents.js";
+import { PageScroll, ArticleNavigation, SetPageTheme, ButtonRippleEffect, imgLasyLoading } from "./modules/projectMetods.js";
 import { isWebp } from "./modules/isWebpSupport.js";
 import { cookiesEvents } from "./modules/cookies.js";
 import "./modules/pageSwiper.js";
@@ -20,25 +19,12 @@ cookiesEvents();
 class InitPage {
     constructor() {
         this.pageScroll = new PageScroll();
-        this.documentEvents = new DocumentEvents();
-        this.fullscreen = new NewsArticleFullscreen();
-        this.articleNavigation = new ArticleNavigation();
-        this.setPageTheme = new SetPageTheme();
         this.ripple = new ButtonRippleEffect();
-        this.imgLasy = new imgLasyLoading();
     }
 
     init() {
-        this.documentEvents.buttonsHoverEvent();
-        this.documentEvents.menuEvent();
-        this.documentEvents.searchEvent();
-        this.documentEvents.bufferEvent();
         this.pageScroll.headerScrollEvent();
-        this.fullscreen.fullscreenEvent();
-        this.articleNavigation.articleDocInit();
-        this.setPageTheme.themeSelectEvent();
         this.ripple.rippleEvent();
-        this.imgLasy.lasyLoad();
     }
 }
 
