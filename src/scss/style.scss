@@ -71,6 +71,7 @@ main {
     gap: 10px;
 }
 .logo{
+    flex: 0 0 auto;
     width: 120px;
     height: 120px;
     border-radius: 50%;
@@ -85,7 +86,7 @@ main {
         transition: .001s ease;
     }
 }
-.header_nav{
+.header_links-conteiner{
     display: flex;
     gap: 10px;
     justify-content: center;
@@ -103,8 +104,13 @@ main {
         opacity: 1;
     }
 }
-.header_burger-menu-button{
+.header_burger-menu-button {
     display: none;
+}
+@media (max-width: 600px) {
+    .header.scrolled .header_burger-menu-button {
+        display: block;
+    }
 }
 h1 {
     margin: 0 0 10px 0;
@@ -125,6 +131,9 @@ h1 {
             a {
                 opacity: 1;
                 font-size: 17px;
+                @media (max-width: 600px) {
+                    display: none;
+                }
             }
         }
         &>div {

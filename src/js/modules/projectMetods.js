@@ -8,6 +8,9 @@ Swiper.use([Navigation, Pagination, Autoplay]);
 class PageScroll {
     constructor() {
         this.header = document.querySelector(".header");
+        this.baseHeaderHeight = this.header.clientHeight;
+        this.main = document.querySelector("main");
+        this.main.style = `padding-top: ${this.baseHeaderHeight}px`;
         this.delta = 500;
         this.lastKeypressTime = 0;
     }
@@ -50,9 +53,8 @@ class PageScroll {
 
     scroll() {
         let pageScroll = window.pageYOffset;
-        const SCROLL_POINT = 200;
+        const SCROLL_POINT = this.baseHeaderHeight - 20;
 
-        console.log(pageScroll);
         if (pageScroll > SCROLL_POINT) {
             this._constractHeader();
         } else if (pageScroll <= SCROLL_POINT) {
@@ -166,12 +168,11 @@ class TextCopy {
 }
 
 class ArticleNavigation {
-    constructor() {
-        this.articleLabels = document.querySelectorAll(".page-article_topic-label");
-        this.linksConteiner = document.querySelector(".article-content_links");
-        this.linksWrapper = document.querySelector(".article-content_wrapper");
-        this.docVeiw = document.querySelector(".veiw-doc-button");
-        this.conteiner = document.querySelector(".article-content");
+    constructor(linkName) {
+        this.articleLabels = document.querySelectorAll(".navigation");
+        this.linksConteiner = document.querySelector(".header_links-conteiner");
+        this.linksWrapper = document.querySelector("nav");
+        this.linkName = linkName;
     }
 
     articleDocInit() {
@@ -185,10 +186,8 @@ class ArticleNavigation {
                 this.#findActiveLabel();
             });
             this.#changeLinkState();
-            this.#veiwDocEvent();
             this.#generateLinksMark();
             this.#findActiveLabel();
-            this.docVeiw.classList.add("set");
         }
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -201,6 +200,8 @@ class ArticleNavigation {
                 } catch {}
             });
         });
+        let pageScroll = new PageScroll();
+        pageScroll.headerScrollEvent();
     }
 
     #refreshLabel(element) {
@@ -225,13 +226,13 @@ class ArticleNavigation {
         link.textContent = element.textContent;
         link.href = `#${element.id}`;
         link.id = `${element.id}_nav`;
-        link.className = "article-content_link";
+        link.className = this.linkName;
         this.linksConteiner.append(link);
     }
 
     #changeLinkState() {
-        const links = document.querySelectorAll('.article-content_link');
-        const sections = document.querySelectorAll('.page-article_topic-label');
+        const links = document.querySelectorAll(`.${this.linkName}`);
+        const sections = this.articleLabels;
 
         let index = sections.length;
         const topicVeiwOnScreen = 0;
@@ -251,50 +252,15 @@ class ArticleNavigation {
         this.linksWrapper.scrollTop = offestTop - linksSroll;
     }
 
-    #veiwDocEvent() {
-        this.docVeiw.addEventListener("click", () => {
-            this.conteiner.classList.contains("active") ? this.closeNav() : this.openNav();
-        });
-        window.addEventListener("resize", () => {
-            if (window.innerWidth > 950) {
-                this.closeNav()
-            }
-        });
-        this.#docResiseEvent();
-    }
-
-    #docResiseEvent() {
-        window.addEventListener("resize", () =>  {
-            if (this.conteiner.classList.contains("active")) {
-                this.docVeiw.style = `transform: translateY(-${this.conteiner.clientHeight}px); background-image: url("../img/icons/icons.svg#close-icon-${this.#getTheme()}");`;
-            }
-        });
-     }
-
-    #getTheme() {
-        let theme = "light";
-        const getCurrentTheme = () => JSON.parse(localStorage.getItem("theme"));
-        switch (getCurrentTheme()){
-            case "active":
-                theme = "dark";
-                break;
-            case "auto":
-                window.matchMedia("(prefers-color-scheme: dark)").matches ? theme = "dark" : void(0);
-                break;
-        }
-
-        return theme;
-    }
-
     #generateLinksMark() {
         let mark = document.createElement("span");
-        mark.className = "article-content_links-mark";
+        mark.className = "links-mark";
         this.linksConteiner.append(mark);
     }
 
     #findActiveLabel() {
-        let mark = document.querySelector(".article-content_links-mark");
-        let links = document.querySelectorAll(".article-content_link");
+        let mark = document.querySelector(".links-mark");
+        let links = document.querySelectorAll(`.${this.linkName}`);
         let positionY = 0;
         let height = 0
         links.forEach(element => {
@@ -304,31 +270,6 @@ class ArticleNavigation {
                 mark.style = `transform: translateY(${positionY + 10}px); height: ${height - 20}px;`
             }
         });
-    }
-
-    themeChangeNavOpend() {
-        let isNavOpend = () => this.docVeiw.classList.contains("active");
-        if (isNavOpend()) {
-            this.docVeiw.style = `background-image: url("../img/icons/icons.svg#close-icon-${this.#getTheme()}");`;
-        }
-    }
-
-    openNav() {
-        if (!this.conteiner) {return}
-        this.conteiner.classList.add("active");
-        this.docVeiw.style = `transform: translateY(-${this.conteiner.clientHeight}px); background-image: url("../img/icons/icons.svg#close-icon-${this.#getTheme()}");`;
-        this.docVeiw.innerText = "";
-        this.docVeiw.dataset.popupLeft = "Закрыть";
-        this.docVeiw.classList.add("active");
-    }
-
-    closeNav() {
-        if (!this.conteiner) {return}
-        this.conteiner.classList.remove("active");
-        this.docVeiw.style = "";
-        this.docVeiw.innerText = "§";
-        this.docVeiw.dataset.popupLeft = "Показать содержание";
-        this.docVeiw.classList.remove("active");
     }
 }
 

@@ -18,13 +18,13 @@ cookiesEvents();
 
 class InitPage {
     constructor() {
-        this.pageScroll = new PageScroll();
         this.ripple = new ButtonRippleEffect();
+        this.articleNavigation = new ArticleNavigation("header_link"); 
     }
 
     init() {
-        this.pageScroll.headerScrollEvent();
         this.ripple.rippleEvent();
+        this.articleNavigation.articleDocInit();
     }
 }
 
