@@ -237,21 +237,21 @@ class ArticleNavigation {
         const sections = this.articleLabels;
 
         let index = sections.length;
-        const topicVeiwOnScreen = 0;
+        const topicVeiwOnScreen = 200;
 
         while(--index && window.scrollY + topicVeiwOnScreen < sections[index].offsetTop) {}
         
         links.forEach((link) => link.classList.remove('active'));
         links[index].classList.add('active');
 
-        let offestTop = links[index].offsetTop; 
-        let linksSroll = 45;
-        if (links[index-1]) {
-            linksSroll += links[index-1].clientHeight;
-            if (this.linksWrapper.clientHeight < (linksSroll + links[index].clientHeight)) {linksSroll = 45}
-        }
+        // let offestTop = links[index].offsetTop; 
+        // let linksSroll = 45;
+        // if (links[index-1]) {
+        //     linksSroll += links[index-1].clientHeight;
+        //     if (this.linksWrapper.clientHeight < (linksSroll + links[index].clientHeight)) {linksSroll = 45}
+        // }
 
-        this.linksWrapper.scrollTop = offestTop - linksSroll;
+        // this.linksWrapper.scrollTop = offestTop - linksSroll;
     }
 
     #generateLinksMark() {
@@ -331,7 +331,7 @@ class SetPageTheme {
 
 export class ButtonRippleEffect {
     constructor() {
-        this.buttons = document.querySelectorAll("button, .burger-menu_link, .news-history_link, .rasp a, .footer-content-social_link, .liceum1-info-link, .ege_link, .oge_link");
+        this.buttons = document.querySelectorAll("button");
         this.button;
     }
 
