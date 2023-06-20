@@ -187,7 +187,6 @@ class ArticleNavigation {
             });
             this.#changeLinkState();
             this.#generateLinksMark();
-            this.#findActiveLabel();
         }
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -202,6 +201,9 @@ class ArticleNavigation {
         });
         let pageScroll = new PageScroll();
         pageScroll.headerScrollEvent();
+        setTimeout(() => {
+            this.#findActiveLabel();
+        }, 100)
     }
 
     #refreshLabel(element) {
@@ -261,13 +263,17 @@ class ArticleNavigation {
     #findActiveLabel() {
         let mark = document.querySelector(".links-mark");
         let links = document.querySelectorAll(`.${this.linkName}`);
+        let positionX = 0;
         let positionY = 0;
-        let height = 0
-        links.forEach(element => {
+        let width = 0
+        const TOP_MARGIN = 2;
+        const DELTA = 10;
+        links.forEach(element => {TOP_MARGIN
             if (element.classList.contains("active")) {
-                height = element.clientHeight;
-                positionY = element.offsetTop;
-                mark.style = `transform: translateY(${positionY + 10}px); height: ${height - 20}px;`
+                width = element.clientWidth;
+                positionX = element.offsetLeft;
+                positionY = element.offsetTop + element.clientHeight + TOP_MARGIN;
+                mark.style = `transform: translateX(${positionX + DELTA/2}px); width: ${width - DELTA}px; top: ${positionY}px;`
             }
         });
     }

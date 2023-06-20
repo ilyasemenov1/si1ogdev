@@ -229,3 +229,17 @@ section {
     text-decoration: none;
     font-weight: 600;
 }
+.links-mark {
+    position: absolute;
+    left: 0;
+    height: 4px;
+    border-radius: 10px;
+    background: var(--text-color-1);
+    transition: transform .2s ease;
+    opacity: 0;
+}
+.header.scrolled {
+    .links-mark {
+        opacity: .9;
+    }
+}
