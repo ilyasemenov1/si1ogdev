@@ -342,4 +342,7 @@ section {
         height: 20px;
         fill: var(--text-color-1)
     }
+    &.active {
+        background: var(--bg-color-7);
+    }
 }
