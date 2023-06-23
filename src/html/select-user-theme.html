@@ -15,7 +15,7 @@
         const element = document.getElementById(`dark-theme-${mode}`);
         if (element && switchMenu) {
             element.classList.add("active");
-            mode === "sys" ? mode = userTheme : void(0);
+            (mode === "sys" || ["active", "disactive"].find(e => e == mode) == undefined)? mode = userTheme : void(0);
             switchMenu.classList.add(`dark-theme-${mode}`);
             switch(mode) {
                 case "disactive":
