@@ -28,6 +28,7 @@ h1, h2, h3, h4, h5 {
 }
 a, button {
     outline: #00000000 solid;
+    overflow: hidden;
     &:focus-visible {
         outline: var(--bg-color-3) solid;
     }
@@ -344,5 +345,28 @@ section {
     }
     &.active {
         background: var(--bg-color-7);
+    }
+}
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background-color: var(--bg-color-28);
+    transform: scale(0);
+    pointer-events: none;
+    transition: .7s linear;
+    &.blur400 {
+        animation: ripple400 700ms linear forwards;
+    }
+    &.blur200 {
+        animation: ripple200 700ms linear forwards;
+    }
+    &.blur100 {
+        animation: ripple100 700ms linear forwards;
+    }
+    &.blur10 {
+        animation: ripple 700ms linear forwards;
+    }
+    &.r-remove {
+        opacity: 0;
     }
 }

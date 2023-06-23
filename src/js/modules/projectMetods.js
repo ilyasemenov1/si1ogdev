@@ -279,59 +279,9 @@ class ArticleNavigation {
     }
 }
 
-class SetPageTheme {
-    constructor() {
-        this.themeButtons = document.querySelectorAll(".theme-button");
-        this.themeMenuButton = document.querySelector(".theme-switch_active-menu");
-        this.theme = JSON.parse(localStorage.getItem("theme"));
-    }
-
-    themeSelectEvent() {
-        this.themeButtons.forEach(element => {
-            element.addEventListener("click", () => {
-                this.clearThemeSelect();
-                element.classList.add("active");
-
-                let mode = element.dataset.value;
-                this.themeMenuButton.classList.add(`dark-theme-${mode}`);
-                localStorage.setItem("theme", JSON.stringify(mode));
-
-                this.setUpTheme(mode);
-
-                let articleNav = new ArticleNavigation();
-                articleNav.themeChangeNavOpend();
-            });
-        });
-    }
-
-    clearThemeSelect() {
-        this.themeButtons.forEach(element => {
-            element.classList.remove("active");
-        });
-        this.themeMenuButton.classList.remove("dark-theme-active", "dark-theme-auto", "dark-theme-disactive");
-    }
-
-    setUpTheme(theme) {
-        switch(theme) {
-            case "active":
-                document.documentElement.classList.add("dark-theme");
-                break
-            case "auto":
-                getAutoTheme();
-                break
-            case "disactive":
-                document.documentElement.classList.remove("dark-theme");
-                break
-            default:
-                getAutoTheme();
-                localStorage.setItem("theme", JSON.stringify("auto"));
-        }
-    }
-}
-
 export class ButtonRippleEffect {
     constructor() {
-        this.buttons = document.querySelectorAll("button");
+        this.buttons = document.querySelectorAll("button, a");
         this.button;
     }
 
@@ -419,4 +369,60 @@ export class imgLasyLoading {
     }
 }
 
-export { PageScroll, TextCopy, ArticleNavigation, SetPageTheme }
+export class SetPageTheme {
+    constructor() {
+        this.themeButtons = document.querySelectorAll(".theme-menu_select-button");
+        this.themeMenuButton = document.querySelector(".header_theme-switch");
+        this.theme = JSON.parse(localStorage.getItem("theme"));
+    }
+
+    themeSelectEvent() {
+        this.themeButtons.forEach(element => {
+            element.addEventListener("click", () => {
+                this.clearThemeSelect();
+                element.classList.add("active");
+
+                let mode = element.dataset.value;
+                this.themeMenuButton.classList.add(`dark-theme-${mode}`);
+                localStorage.setItem("theme", JSON.stringify(mode));
+
+                // Using a public function setUpMode
+                mode !== "sys" ? setUpMode(mode) : void(0);
+
+                this.setUpTheme(mode);
+            });
+        });
+    }
+
+    clearThemeSelect() {
+        this.themeButtons.forEach(element => {
+            element.classList.remove("active");
+        });
+        this.themeMenuButton.classList.remove("dark-theme-active", "dark-theme-sys", "dark-theme-disactive");
+    }
+
+    setUpTheme(theme) {
+        switch(theme) {
+            case "active":
+                document.documentElement.classList.add("dark-theme");
+                break
+            case "sys":
+                this.setAutoTheme(theme);
+                break
+            case "disactive":
+                document.documentElement.classList.remove("dark-theme");
+                break
+            default:
+                this.setAutoTheme(theme);
+                localStorage.setItem("theme", JSON.stringify("sys"));
+        }
+    }
+
+    setAutoTheme(mode) {
+        // Using a public functions getAutoTheme and setUpMode
+        userTheme = getAutoTheme();
+        setUpMode(mode, userTheme);
+    }
+}
+
+export { PageScroll, TextCopy, ArticleNavigation }

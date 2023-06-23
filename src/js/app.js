@@ -20,11 +20,13 @@ class InitPage {
     constructor() {
         this.ripple = new ButtonRippleEffect();
         this.articleNavigation = new ArticleNavigation("header_link"); 
+        this.setpageTheme = new SetPageTheme();
     }
 
     init() {
         this.ripple.rippleEvent();
         this.articleNavigation.articleDocInit();
+        this.setpageTheme.themeSelectEvent();
     }
 }
 
