@@ -182,8 +182,10 @@ class ArticleNavigation {
                 this.#generateLink(element);
             });
             window.addEventListener("scroll", () => {
-                this.#changeLinkState();
-                this.#findActiveLabel();
+                this.#refreshState();
+            });
+            window.addEventListener("resize", () => {
+                this.#refreshState();
             });
             this.#changeLinkState();
             this.#generateLinksMark();
@@ -267,6 +269,11 @@ class ArticleNavigation {
                 mark.style = `transform: translateX(${positionX + DELTA/2}px); width: ${width - DELTA}px; top: ${positionY}px;`
             }
         });
+    }
+
+    #refreshState() {
+        this.#changeLinkState();
+        this.#findActiveLabel();
     }
 }
 
