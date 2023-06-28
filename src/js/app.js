@@ -1,8 +1,5 @@
-import { PageScroll, ArticleNavigation, SetPageTheme, ButtonRippleEffect, imgLasyLoading } from "./modules/projectMetods.js";
+import { ArticleNavigation, SetPageTheme, ButtonRippleEffect, imgLasyLoading } from "./modules/projectMetods.js";
 import { isWebp } from "./modules/isWebpSupport.js";
-import { cookiesEvents } from "./modules/cookies.js";
-import "./modules/pageSwiper.js";
-import "./modules/maps.js";
 
 import LazyLoad from "vanilla-lazyload";
 const lazyLoadInstance = new LazyLoad({
@@ -14,7 +11,6 @@ const lazyLoadInstance = new LazyLoad({
 lazyLoadInstance.update();
 
 isWebp();
-cookiesEvents();
 
 class InitPage {
     constructor() {

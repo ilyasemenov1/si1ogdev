@@ -243,15 +243,6 @@ class ArticleNavigation {
         
         links.forEach((link) => link.classList.remove('active'));
         links[index].classList.add('active');
-
-        // let offestTop = links[index].offsetTop; 
-        // let linksSroll = 45;
-        // if (links[index-1]) {
-        //     linksSroll += links[index-1].clientHeight;
-        //     if (this.linksWrapper.clientHeight < (linksSroll + links[index].clientHeight)) {linksSroll = 45}
-        // }
-
-        // this.linksWrapper.scrollTop = offestTop - linksSroll;
     }
 
     #generateLinksMark() {
@@ -356,13 +347,13 @@ export class imgLasyLoading {
         });
     }
 
-    lasyLoadEvent() {
+    // lasyLoadEvent() {
 
-    }
+    // }
 
-    createContainer(container, innerImg) {
+    // createContainer(container, innerImg) {
 
-    }
+    // }
 
     removeBlur(element) {
         element.classList.remove("blurred");
@@ -419,7 +410,7 @@ export class SetPageTheme {
     }
 
     setAutoTheme(mode) {
-        // Using a public functions getAutoTheme and setUpMode
+        // Using public functions getAutoTheme and setUpMode
         userTheme = getAutoTheme();
         setUpMode(mode, userTheme);
     }
