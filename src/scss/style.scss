@@ -161,10 +161,9 @@ h1 {
             font-size: 20px;
         }
         @media (max-width: 600px) {
-            &:has(.header_menu-button:hover),
-            &:has(.header_link:hover),
-            &:has(.header_link:focus),
-            &:has(.header_nav:hover) {
+            &.active,
+            &:has(.header_menu-button:focus-visible),
+            &:has(.header_link:focus-visible) {
                 border-radius: 0;
                 background: var(--bg-color-2);
                 .header_nav {
@@ -513,12 +512,8 @@ section {
     border-radius: 50%;
     &:hover,
     &:focus-visible {
+        cursor: pointer;
         background: var(--bg-color-7);
-    }
-    &:focus {
-        svg {
-            rotate: (90deg);
-        }
     }
     svg {
         position: absolute;

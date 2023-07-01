@@ -8,11 +8,15 @@ Swiper.use([Navigation, Pagination, Autoplay]);
 class PageScroll {
     constructor() {
         this.header = document.querySelector(".header");
+        this.headerNavLinks = document.querySelectorAll(".header_link");
+        this.menuButton = document.querySelector(".header_menu-button");
         this.baseHeaderHeight = this.header.clientHeight;
         this.main = document.querySelector("main");
         this.main.style = `padding-top: ${this.baseHeaderHeight}px`;
+        this.isScrolled = false;
         this.delta = 500;
         this.lastKeypressTime = 0;
+        this.menuButtonEvent();
     }
 
     headerScrollEvent() {
@@ -24,6 +28,12 @@ class PageScroll {
         });
         window.addEventListener("keydown", (event) => {
             this.doubleArrowKeypress(event);
+        });
+    }
+
+    menuButtonEvent() {
+        this.menuButton.addEventListener("click", () => {
+            this.header.classList.toggle("active");
         });
     }
 
@@ -55,14 +65,20 @@ class PageScroll {
         let pageScroll = window.pageYOffset;
         const SCROLL_POINT = this.baseHeaderHeight - 20;
 
-        if (pageScroll > SCROLL_POINT) {
+        if (pageScroll > SCROLL_POINT && !this.isScrolled) {
             this._constractHeader();
-        } else if (pageScroll <= SCROLL_POINT) {
+            this.isScrolled = true;
+        } else if (pageScroll <= SCROLL_POINT && this.isScrolled) {
             this._removeScrollHeader();
+            this.header.classList.remove("active");
+            this.isScrolled = false;
         }
     }
 
     _constractHeader() {
+        this.headerNavLinks.forEach(element => {
+            element.tabIndex = 2;
+        });
         this.header.classList.add("scrolled");
     }
 
