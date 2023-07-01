@@ -194,9 +194,9 @@ h1 {
             top: 100%;
             width: 100%;
             padding: 15px 20px;
-            border-radius: 0 0 10px 10px;
+            border-radius: 0 0 15px 15px;
             background: var(--bg-color-2);
-            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 12px #0000001a;
             box-sizing: border-box;
             transition: .2s ease;
             transform: translateY(-30px);
