@@ -279,8 +279,10 @@ class ArticleNavigation {
 
 export class ButtonRippleEffect {
     constructor() {
-        this.buttons = document.querySelectorAll("button, a");
+        this.buttons = [...document.querySelectorAll("button, a")];
+        this.elementsNotUsed = [...document.querySelectorAll(".logo")];
         this.button;
+        this.removeUnusedElements();
     }
 
     createRipple(event) {
@@ -306,6 +308,13 @@ export class ButtonRippleEffect {
 
         this.removeRipple();
         this.button.appendChild(circle);
+    }
+
+    removeUnusedElements() {
+        for (let i = 0; i < this.elementsNotUsed.length; i++) {
+            let index = this.buttons.indexOf(this.elementsNotUsed[i]);
+            if (index > -1) this.buttons.splice(index, 1);
+        }
     }
 
     removeRipple() {
