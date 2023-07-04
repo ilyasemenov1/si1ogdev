@@ -5,7 +5,7 @@ import '../../../node_modules/swiper/swiper-bundle.min.css';
     
 Swiper.use([Navigation, Pagination, Autoplay]);
 
-class PageScroll {
+export class PageScroll {
     constructor() {
         this.header = document.querySelector(".header");
         this.headerNavLinks = document.querySelectorAll(".header_link");
@@ -88,7 +88,7 @@ class PageScroll {
 }
 
 
-class TextCopy {
+export class TextCopy {
     constructor(element) {
         this.element = element;
         this.isAddNotify = JSON.parse(sessionStorage.getItem("isAddNotify"));
@@ -172,18 +172,21 @@ class TextCopy {
         let top = window.innerHeight - notify_e.clientHeight - 30;
         notify_e.style = `left: ${left}px; top: ${top}px`;
         notify_e.classList.add("active")
-
-        setTimeout(() => {
-            notify_e.classList.add("remove");
+        new Promise(() => {
+            setTimeout(() => {
+                notify_e.classList.add("remove");
+            }, 1000);
+        })
+        .then(() => {
             setTimeout(() => {
                 notify_e.remove();
                 sessionStorage.setItem("isAddNotify", JSON.stringify(true));
             }, 200)
-        }, 1000);
+        })
     }
 }
 
-class ArticleNavigation {
+export class ArticleNavigation {
     constructor(linkName) {
         this.articleLabels = document.querySelectorAll(".navigation");
         this.linksConteiner = document.querySelector(".header_links-conteiner");
@@ -447,5 +450,3 @@ export class SetPageTheme {
         setUpMode(mode, userTheme);
     }
 }
-
-export { PageScroll, TextCopy, ArticleNavigation }
