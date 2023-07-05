@@ -567,9 +567,11 @@ section {
     transition: .2s ease;
 }
 .tech-labels_logo{
+    --grayscale: .45;
     position: absolute;
     width: 100%;
     height: 100%;
+    filter: grayscale(var(--grayscale)) contrast(1.2);
     &.js {
         left: -6px;
         top: -6px;
@@ -582,7 +584,7 @@ section {
         inset: 10px;
     }
     &.python {
-        filter: brightness(1.08);
+        filter: brightness(1.08) grayscale(var(--grayscale));
     }
     &.tensorflow {
         left: 13px;
