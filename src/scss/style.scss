@@ -246,9 +246,9 @@ section {
 .project-card{
     display: flex;
     flex-direction: column;
-    // gap: 10px;
     width: 100%;
     min-height: 100px;
+    margin: 0;
     border-radius: 15px;
     background: var(--bg-color-4);
     overflow: hidden;
