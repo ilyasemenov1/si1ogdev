@@ -1,6 +1,8 @@
 
 import webp from "gulp-webp";
 import imagemin from "gulp-imagemin";
+import rename from "gulp-rename";
+import responsive from "gulp-responsive";
 
 let images = () => {
     return app.gulp.src(app.path.src.images)
@@ -21,6 +23,17 @@ let images = () => {
         interlaced: true,
         optimizationLevel: 3
     }))
+    .pipe(app.gulp.dest(app.path.build.images))
+    .pipe(app.gulp.src(app.path.src.images))
+    .pipe(responsive({
+        width: 15,
+        quality: 10,
+        compressionLevel: 7,
+    }))
+    .pipe(rename(function(opt) {
+        opt.basename = `${opt.basename}-low`
+        return opt;
+      }))
     .pipe(app.gulp.dest(app.path.build.images))
     .pipe(app.gulp.src(app.path.src.svg))
     .pipe(app.gulp.dest(app.path.build.images))
