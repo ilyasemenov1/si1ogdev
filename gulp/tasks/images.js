@@ -26,7 +26,9 @@ let images = () => {
     .pipe(app.gulp.dest(app.path.build.images))
     .pipe(app.gulp.src(app.path.src.images))
     .pipe(gm(function (gmfile) {
-        return gmfile.resize(90, 90);
+        gmfile.resize(90, 90);
+        gmfile.blur(15)
+        return gmfile;
       }))
     .pipe(rename(function(opt) {
         opt.basename = `${opt.basename}-low`

@@ -2,6 +2,7 @@ import { ArticleNavigation, SetPageTheme, ButtonRippleEffect, imgLasyLoading } f
 import { isWebp } from "./modules/isWebpSupport.js";
 
 import LazyLoad from "vanilla-lazyload";
+
 const lazyLoadInstance = new LazyLoad({
     callback_error: (img) => {
         img.setAttribute("srcset", "fallback_image@1x.jpg 1x, fallback_image@2x.jpg 2x");

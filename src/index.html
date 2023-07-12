@@ -16,7 +16,7 @@
                     <div>
                         <figure class="project-card">
                             <a href="https://weather-app.si1ogdev.ru/">
-                                <img src="@img/page/card-icons/weather-card-img.png" alt="Приложение погода" class="project-card_img">
+                                <img src="@img/page/card-icons/weather-card-img.png" alt="Приложение погода" class="project-card_img lazy">
                             </a>
                             <figcaption class="project-card_content">
                                 <h3 class="project-card_label">
@@ -40,7 +40,7 @@
                         </figure>
                         <figure class="project-card">
                             <a href="https://liceum1-beta.si1ogdev.ru/">
-                                <img src="@img/page/card-icons/liceum1-card-img.png" alt="Сайт МОУ 'Лицей №1'" class="project-card_img">
+                                <img src="@img/page/card-icons/liceum1-card-img.png" alt="Сайт МОУ 'Лицей №1'" class="project-card_img lazy">
                             </a>
                             <figcaption class="project-card_content">
                                 <h3 class="project-card_label">
@@ -66,7 +66,7 @@
                     <div>
                         <figure class="project-card">
                             <a href="https://github.com/ilyasemenov1/Raspberry_pi_objects_detection">
-                                <img src="@img/page/card-icons/objects-detection-img.png" alt="Распознование предметов на raspberry pi" class="project-card_img">
+                                <img src="@img/page/card-icons/objects-detection-img.png" alt="Распознование предметов на raspberry pi" class="project-card_img lazy">
                             </a>
                             <figcaption class="project-card_content">
                                 <h3 class="project-card_label">
@@ -146,6 +146,7 @@
         </section>
     </main>
     @@include("./html/footer.html", {})
+    @@include("./html/img-lazy-load.html", {})
     @@include("./html/select-user-theme.html", {})
     <script src="./js/app.min.js"></script>
 </body>
