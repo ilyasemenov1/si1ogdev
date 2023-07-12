@@ -15,9 +15,10 @@
             let parent = element.parentElement;
             let src = element.src;
             let baseName = src.split(".")[0];
+            let baseImg = `img/${baseName.split("img/")[1]}`;
             let lastName = src.split(".")[1];
             let source = document.createElement("source");
-            source.srcset = `${baseName}-low.${lastName}`;
+            source.srcset = `${baseImg}-low.${lastName}`;
             parent.prepend(source);
             element.addEventListener("load", () => {
                 source.remove();
