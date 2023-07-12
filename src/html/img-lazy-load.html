@@ -7,6 +7,7 @@
         lazyLoad() {
             this.images.forEach(element => {
                 element.classList.add("lazy");
+                element.classList.add("img-loading");
                 element.setAttribute("loading", "lazy")
                 this.addLoadConteiner(element);
             });
@@ -14,14 +15,15 @@
         addLoadConteiner(element) {
             let parent = element.parentElement;
             let src = element.src;
-            let baseName = src.split(".")[0];
-            let baseImg = `img/${baseName.split("img/")[1]}`;
-            let lastName = src.split(".")[1];
+            let imgUrl = `img/${src.split("img/")[1]}`;
+            let baseName = imgUrl.split(".")[0];
+            let lastName = imgUrl.split(".")[1];
             let source = document.createElement("source");
-            source.srcset = `${baseImg}-low.${lastName}`;
+            source.srcset = `${baseName}-low.${lastName}`;
             parent.prepend(source);
             element.addEventListener("load", () => {
                 source.remove();
+                element.classList.remove("img-loading");
             })
         }
     }

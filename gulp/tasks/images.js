@@ -26,8 +26,7 @@ let images = () => {
     .pipe(app.gulp.dest(app.path.build.images))
     .pipe(app.gulp.src(app.path.src.images))
     .pipe(gm(function (gmfile) {
-        gmfile.resize(90, 90);
-        gmfile.blur(15)
+        gmfile.resize(20, 20);
         return gmfile;
       }))
     .pipe(rename(function(opt) {
