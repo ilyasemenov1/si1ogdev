@@ -2,7 +2,7 @@
 import webp from "gulp-webp";
 import imagemin from "gulp-imagemin";
 import rename from "gulp-rename";
-import responsive from "gulp-responsive";
+import gm from "gulp-gm";
 
 let images = () => {
     return app.gulp.src(app.path.src.images)
@@ -25,11 +25,9 @@ let images = () => {
     }))
     .pipe(app.gulp.dest(app.path.build.images))
     .pipe(app.gulp.src(app.path.src.images))
-    .pipe(responsive({
-        width: 15,
-        quality: 10,
-        compressionLevel: 7,
-    }))
+    .pipe(gm(function (gmfile) {
+        return gmfile.resize(90, 90);
+      }))
     .pipe(rename(function(opt) {
         opt.basename = `${opt.basename}-low`
         return opt;
