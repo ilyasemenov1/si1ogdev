@@ -25,10 +25,11 @@ a, button, h1, h2, h3, h4, h5, p, article, input, span, li, ul, img, svg {
     }
 }
 img {
-    transition: .1s ease;
-    filter: blur(10px);
-    &.entered {
-        filter: blur(0);
+    &.img-loading {
+        filter: blur(15px);
+    }
+    &.error {
+        filter: blur(0) !important;
     }
 }
 h1, h2, h3, h4, h5 {
